@@ -1,28 +1,26 @@
-import { TaskProps } from '../Interfaces/TaskInterfaces';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TaskProps } from "../Store/index";
 
-interface AddTaskAction {
-  type: 'ADD_TASK';
-  payload: TaskProps;
+interface TasksState {
+  tasks: TaskProps[];
 }
 
-interface RemoveTaskAction {
-  type: 'REMOVE_TASK';
-  payload: string; // ID of the task to remove
-}
-
-type TasksActionTypes = AddTaskAction | RemoveTaskAction;
-
-const initialState: TaskProps[] = [];
-
-const tasksReducer = (state = initialState, action: TasksActionTypes): TaskProps[] => {
-  switch (action.type) {
-    case 'ADD_TASK':
-      return [...state, action.payload];
-    case 'REMOVE_TASK':
-      return state.filter(task => task.id !== action.payload);
-    default:
-      return state;
-  }
+const initialState: TasksState = {
+  tasks: [],
 };
 
-export default tasksReducer;
+const tasksSlice = createSlice({
+  name: "tasks",
+  initialState,
+  reducers: {
+    addTask(state: TasksState, action: PayloadAction<TaskProps>) {
+      state.tasks.push(action.payload);
+    },
+    removeTask(state: TasksState, action: PayloadAction<string>) {
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+    },
+  },
+});
+
+export const { addTask, removeTask } = tasksSlice.actions;
+export default tasksSlice.reducer;

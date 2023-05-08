@@ -5,9 +5,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import Paper from "@mui/material/Paper";
 import Task from "./Task";
-import { TaskProps, TaskList } from "../Interfaces/TaskInterfaces";
+import { RootState } from "../Store/index";
+import { useSelector } from 'react-redux'
 
-export default function TaskTable({ tasks }: TaskList) {
+export default function TaskTable() {
+  const tasks = useSelector((state: RootState) => state.tasks);
+  
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
