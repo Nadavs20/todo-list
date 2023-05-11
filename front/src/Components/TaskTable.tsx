@@ -6,31 +6,29 @@ import TableHead from "@mui/material/TableHead";
 import Paper from "@mui/material/Paper";
 import Task from "./Task";
 import { RootState } from "../Store/index";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 
 export default function TaskTable() {
   const tasks = useSelector((state: RootState) => state.tasks);
-  
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+      <Table sx={{
+        width: "100vm"
+        }}
+        size="small" aria-label="a dense table">
         <TableHead>
           <Task
-            id="ID"
+            id="0"
             description="Description"
             dueDate="Due date"
             status="Status"
+            index="ID"
           />
         </TableHead>
         <TableBody>
-          {tasks.map((task) => (
-            <Task
-              key={task.id}
-              id={task.id}
-              description={task.description}
-              dueDate={task.dueDate}
-              status={task.status}
-            />
+          {tasks.map((task, index) => (
+            <Task {...task} index={(index + 1).toString()} />
           ))}
         </TableBody>
       </Table>
