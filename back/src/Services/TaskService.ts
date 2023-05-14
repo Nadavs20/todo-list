@@ -13,30 +13,47 @@ export class TaskService {
   }
 
   async getTaskById(id: number): Promise<Task | null> {
-    return await this.taskRepository.findOne({ where: { id: id } });
+    try {
+      return this.taskRepository.findOne({ where: { id: id } });
+    } catch (err) {
+      throw new Error(`Task with id ${id} was not found`);
+    }
   }
 
   async createTask(task: Task): Promise<Task> {
-    return await this.taskRepository.save(task);
+    try {
+        return this.taskRepository.save(task);
+      } catch (err) {
+        throw new Error(`Could not create task`);
+      }
+    
   }
 
-  async updateTask(id: number, task: Task): Promise<Task | null> {
-    const taskToUpdate = await this.taskRepository.findOne({
-      where: { id: id },
-    });
+  async updateTask(task: Task): Promise<Task | null> {
+    try {
+      const taskToUpdate = await this.taskRepository.findOne({
+        where: { id: task.id },
+      });
 
-    if (taskToUpdate) {
-      taskToUpdate.description = task.description;
-      taskToUpdate.dueDate = task.dueDate;
-      taskToUpdate.status = task.status;
+      if (taskToUpdate) {
+        taskToUpdate.description = task.description;
+        taskToUpdate.dueDate = task.dueDate;
+        taskToUpdate.status = task.status;
 
-      return await this.taskRepository.save(taskToUpdate);
+        return await this.taskRepository.save(taskToUpdate);
+      }
+
+      return null;
+    } catch (err) {
+      throw new Error(`Task with id ${task.id} was not found`);
     }
-
-    return null;
   }
 
   async deleteTask(id: number): Promise<void> {
-    await this.taskRepository.delete(id);
+    try {
+      await this.taskRepository.delete(id);
+    } catch (err) {
+      throw new Error(`Task with id ${id} does not exist`);
+    }
   }
 }
