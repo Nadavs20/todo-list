@@ -4,9 +4,9 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import { createConnection } from "typeorm";
-import { taskController } from "./Controllers/TaskController";
+import { taskController } from "./controller/TaskController";
 
-// Load environment variables from .env file    
+// Load environment variables from .env file
 dotenv.config();
 
 // Create a new express app instance
@@ -15,7 +15,7 @@ const app = express();
 // Set up middleware
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/api', taskController)
+app.use("/tasks", taskController);
 
 // Start the server
 app.listen(process.env.PORT, () => {
