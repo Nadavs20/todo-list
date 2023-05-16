@@ -1,28 +1,26 @@
 import { tasksApi } from "./api";
-import { TaskProps } from "../Store/index";
+import { Task } from "../Store/index";
 
-export async function getAllTasks(): Promise<TaskProps[]> {
-  const response = await tasksApi.get<TaskProps[]>("/tasks");
+export const getAllTasks = async () => {
+  const response = await tasksApi.get<Task[]>(`/`);
   return response.data;
-}
+};
 
-export async function getTaskById(id: number): Promise<TaskProps | undefined> {
-  const response = await tasksApi.get<TaskProps>(`/tasks/${id}`);
+export const getTaskById = async (id: number) => {
+  const response = await tasksApi.get<Task>(`/${id}`);
   return response.data;
-}
+};
 
-export async function createTask(task: TaskProps): Promise<TaskProps> {
-  const response = await tasksApi.post<TaskProps>("/tasks", task);
+export const createTask = async (task: Task) => {
+  const response = await tasksApi.post<Task>(`/`, task);
   return response.data;
-}
+};
 
-export async function updateTask(
-  task: TaskProps
-): Promise<TaskProps | undefined> {
-  const response = await tasksApi.put<TaskProps>(`/tasks/${task.id}`, task);
+export const updateTask = async (task: Task) => {
+  const response = await tasksApi.put<Task>(`/`, task);
   return response.data;
-}
+};
 
-export async function deleteTask(id: number): Promise<void> {
-  await tasksApi.delete(`/tasks/${id}`);
-}
+export const deleteTask = async (id: number) => {
+  await tasksApi.delete(`/${id}`);
+};
