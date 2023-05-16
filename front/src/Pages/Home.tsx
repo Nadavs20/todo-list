@@ -2,7 +2,7 @@ import TaskTable from "../Components/TaskTable";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTask } from "../Reducers/TaskReducer";
-import { TaskProps } from "../Store/index";
+import { Task } from "../Store/index";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, Grid, Select, MenuItem } from "@material-ui/core";
 import { Alert, AlertTitle, Color } from "@material-ui/lab";
@@ -65,7 +65,7 @@ const Home = () => {
     }
 
     const id = Math.floor(Math.random() * 1000).toString();
-    const newTask: TaskProps = { id, description, dueDate, status };
+    const newTask: Task = { id, description, dueDate, status };
     dispatch(addTask(newTask));
     setAlert({ type: "success", message: "Task added successfully" });
     setDescription("");

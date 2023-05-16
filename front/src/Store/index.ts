@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import tasksReducer from "../Reducers/TaskReducer";
 
-export interface TaskProps {
+export interface Task {
   id: string;
   description: string;
   dueDate: string;
@@ -9,7 +9,7 @@ export interface TaskProps {
 }
 
 export interface RootState {
-  tasks: TaskProps[];
+  tasks: Task[];
 }
 
 const store = configureStore({

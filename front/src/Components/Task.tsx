@@ -5,22 +5,30 @@ import { useDispatch } from "react-redux";
 import { removeTask } from "../Reducers/TaskReducer";
 import { IconButton } from "@mui/material";
 
-const Task = (props: any) => {
-  const { index, id, description, dueDate, status } = props;
+interface TaskProps {
+  index: string;
+  id: string;
+  description: string;
+  dueDate: string;
+  status: string;
+}
+
+const TaskItem = (props: TaskProps) => {
   const dispatch = useDispatch();
   const handleDelete = () => {
-    dispatch(removeTask(id));
+    dispatch(removeTask(props.id));
   };
 
   return (
-    <TableRow sx={{
-      border: "solid black",
-      backgroundColor: ""
-    }}>
-      <TableCell>{index}</TableCell>
-      <TableCell>{description}</TableCell>
-      <TableCell>{dueDate}</TableCell>
-      <TableCell>{status}</TableCell>
+    <TableRow
+      sx={{
+        border: "solid black",
+      }}
+    >
+      <TableCell>{props.index}</TableCell>
+      <TableCell>{props.description}</TableCell>
+      <TableCell>{props.dueDate}</TableCell>
+      <TableCell>{props.status}</TableCell>
       <TableCell>
         <IconButton
           aria-label="delete"
@@ -39,4 +47,4 @@ const Task = (props: any) => {
   );
 };
 
-export default Task;
+export default TaskItem;
