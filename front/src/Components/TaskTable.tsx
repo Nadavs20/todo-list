@@ -26,7 +26,7 @@ export default function TaskTable() {
             description="Description"
             dueDate="Due date"
             status="Status"
-            index="ID"
+            index="Index"
           />
         </TableHead>
         <TableBody>
