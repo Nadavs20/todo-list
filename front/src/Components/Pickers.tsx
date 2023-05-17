@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, Grid, Select, MenuItem } from "@material-ui/core";
-import { Alert, AlertTitle, Color } from "@material-ui/lab";
 import { addTask } from "../Reducers/TaskReducer";
 import { Task } from "../Store/index";
 import { validateDate, validateDescription } from "../rules/validation";
+import "alertifyjs/build/css/alertify.min.css";
+import alertify from "alertifyjs";
 
 const useStyles = makeStyles((theme) => ({
   submit: {
@@ -26,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
+  allertValidations: {
+    width: "80vw",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 const Pickers = () => {
@@ -33,25 +40,20 @@ const Pickers = () => {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [status, setStatus] = useState("todo");
-  const [alert, setAlert] = useState({ type: "", message: "" });
   const dispatch = useDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      !validateDescription(description) ||
-      !status ||
-      !validateDate(dueDate)
-    ) {
-      setAlert({ type: "error", message: "Please validate all fields" });
+    if (!validateDescription(description) || !validateDate(dueDate)) {
+      alertify.error("Hello this is an error message!");
       return;
     }
 
     const id = Math.floor(Math.random() * 1000).toString();
     const newTask: Task = { id, description, dueDate, status };
     dispatch(addTask(newTask));
-    setAlert({ type: "success", message: "Task added successfully" });
+    alertify.success("Hello this is a success message!");
     setDescription("");
     setDueDate("");
     setStatus("todo");
@@ -59,14 +61,6 @@ const Pickers = () => {
 
   return (
     <div>
-      {alert.message && (
-        <Alert severity={alert.type as Color}>
-          <AlertTitle>
-            {alert.type === "success" ? "Success" : "Error"}
-          </AlertTitle>
-          {alert.message}
-        </Alert>
-      )}
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
