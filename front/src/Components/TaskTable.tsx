@@ -7,12 +7,18 @@ import Paper from "@mui/material/Paper";
 import TaskItem from "./TaskItem";
 import { RootState } from "../Store/index";
 import { useSelector } from "react-redux";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  tableWrapper: {},
+}));
 
 export default function TaskTable() {
   const tasks = useSelector((state: RootState) => state.tasks);
+  const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={classes.tableWrapper}>
       <Table
         sx={{
           width: "100vm",

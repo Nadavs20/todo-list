@@ -10,7 +10,7 @@ const initialState: Task[] = [
     id: "1",
     description: "Finish React project",
     dueDate: "2023-06-01",
-    status: "To Do",
+    status: "In Progress",
   },
 ];
 
@@ -24,8 +24,14 @@ const tasksSlice = createSlice({
     removeTask(state: Task[], action: PayloadAction<string>) {
       return state.filter((task) => task.id !== action.payload);
     },
+    setTaskList(state: Task[], action: PayloadAction<Task[]>) {
+      state = action.payload;
+    },
+    reverseList(state: Task[], action: PayloadAction<void>) {
+      return state.slice().reverse();
+    },
   },
 });
 
-export const { addTask, removeTask } = tasksSlice.actions;
+export const { addTask, removeTask, setTaskList, reverseList } = tasksSlice.actions;
 export default tasksSlice.reducer;

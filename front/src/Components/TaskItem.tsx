@@ -1,16 +1,17 @@
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FormatLineSpacingIcon from "@mui/icons-material/FormatLineSpacing";
 import { Select, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { removeTask } from "../Reducers/TaskReducer";
+import { removeTask, reverseList } from "../Reducers/TaskReducer";
 import { IconButton } from "@mui/material";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
 
-interface TaskProps {
+export interface TaskProps {
   index: string;
   id: string;
   description: string;
@@ -21,43 +22,43 @@ interface TaskProps {
 const useStyles = makeStyles((theme) => ({
   taskItem: {
     height: "8vh",
+    width: "80vh",
   },
   statusDropdown: {
     width: "20vh",
   },
+  headerItem: {
+    fontSize: "4vm",
+    fontWeight: "bold",
+    fontFamily: "Courier New",
+    background: "#42a5f5",
+  },
 }));
-
-// const statusToColor = (status: string) => {
-//   let color: string = "";
-
-//   if (status === "To Do") {
-//     color = "#42a5f5";
-//   } else if (status === "Done") {
-//     color = "#64ffda";
-//   } else if (status === "In Progress") {
-//     color = "#7e57c2";
-//   } else {
-//     color = "#cddc39";
-//   }
-
-//   return color;
-// };
 
 const TaskItem = (props: TaskProps) => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(props.status);
   const classes = useStyles();
+
+  const handleReverse = () => {
+    dispatch(reverseList());
+    alertify.success("Reversed todo-list");
+  };
   const handleDelete = () => {
     dispatch(removeTask(props.id));
     alertify.success("Task deleted successfully");
   };
+
+  const taskItemClass = `${classes.taskItem} ${
+    props.isHeader ? classes.headerItem : null
+  }`;
 
   return (
     <TableRow
       sx={{
         border: "solid black",
       }}
-      className={classes.taskItem}
+      className={taskItemClass}
     >
       <TableCell>{props.index}</TableCell>
       <TableCell>{props.description}</TableCell>
@@ -81,8 +82,21 @@ const TaskItem = (props: TaskProps) => {
           </Select>
         )}
       </TableCell>
-      {props.isHeader ? null : (
-        <TableCell>
+      <TableCell>
+        {props.isHeader ? (
+          <IconButton
+            aria-label="reverse"
+            onClick={handleReverse}
+            sx={{
+              width: "5vh",
+              height: "5vh",
+              color: "black",
+              borderRadius: "4vh",
+            }}
+          >
+            <FormatLineSpacingIcon />
+          </IconButton>
+        ) : (
           <IconButton
             aria-label="delete"
             onClick={handleDelete}
@@ -95,8 +109,8 @@ const TaskItem = (props: TaskProps) => {
           >
             <DeleteIcon />
           </IconButton>
-        </TableCell>
-      )}
+        )}
+      </TableCell>
     </TableRow>
   );
 };
