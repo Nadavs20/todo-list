@@ -10,7 +10,7 @@ const initialState: Task[] = [
     id: "1",
     description: "Finish React project",
     dueDate: "2023-06-01",
-    status: "Incomplete",
+    status: "To Do",
   },
 ];
 

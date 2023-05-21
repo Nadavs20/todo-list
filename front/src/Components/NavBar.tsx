@@ -16,6 +16,9 @@ export default function NavBar() {
             edge="start"
             color="inherit"
             aria-label="menu"
+            onClick={() =>
+              window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            }
             sx={{ mr: 2 }}
           >
             <PlaylistAddIcon />

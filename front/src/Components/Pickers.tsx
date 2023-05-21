@@ -1,7 +1,16 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Button, Grid, Select, MenuItem } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  Grid,
+  Select,
+  MenuItem,
+  InputLabel,
+  Box,
+  FormControl,
+} from "@material-ui/core";
 import { addTask } from "../Reducers/TaskReducer";
 import { Task } from "../Store/index";
 import { validateDate, validateDescription } from "../rules/validation";
@@ -21,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "8vh",
     marginTop: "2vh",
   },
-  formWrapper: {
+  addWrapper: {
     width: "100vw",
     display: "flex",
     alignItems: "center",
@@ -33,20 +42,25 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
+  formWrapper: {
+    marginTop: "18vh",
+    marginBottom: "1vh",
+    height: "25vh",
+  },
 }));
 
 const Pickers = () => {
   const classes = useStyles();
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [status, setStatus] = useState("todo");
+  const [status, setStatus] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validateDescription(description) || !validateDate(dueDate)) {
-      alertify.error("Hello this is an error message!");
+      alertify.error("Please validate all fields!");
       return;
     }
 
@@ -56,11 +70,11 @@ const Pickers = () => {
     alertify.success("Hello this is a success message!");
     setDescription("");
     setDueDate("");
-    setStatus("todo");
+    setStatus("");
   };
 
   return (
-    <div>
+    <div className={classes.formWrapper}>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
@@ -86,20 +100,24 @@ const Pickers = () => {
             />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Select
-              id="status"
-              label="Status"
-              variant="outlined"
-              fullWidth
-              value={status}
-              onChange={(e) => setStatus(e.target.value as string)}
-            >
-              <MenuItem value="todo">To Do</MenuItem>
-              <MenuItem value="in-progress">In Progress</MenuItem>
-              <MenuItem value="done">Done</MenuItem>
-            </Select>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="status">Status</InputLabel>
+                <Select
+                  labelId="status"
+                  id="demo-simple-select"
+                  value={status}
+                  variant="outlined"
+                  onChange={(e) => setStatus(e.target.value as string)}
+                >
+                  <MenuItem value="To Do">To Do</MenuItem>
+                  <MenuItem value="In Progress">In Progress</MenuItem>
+                  <MenuItem value="Done">Done</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </Grid>
-          <Grid className={classes.formWrapper}>
+          <Grid className={classes.addWrapper}>
             <Button
               variant="contained"
               type="submit"
