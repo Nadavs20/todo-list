@@ -30,9 +30,14 @@ const tasksSlice = createSlice({
     reverseList(state: Task[], action: PayloadAction<void>) {
       return state.slice().reverse();
     },
+    updateTask(state: Task[], action: PayloadAction<Task>) {
+      return (state = [...state].map((task) =>
+        task.id === action.payload.id ? action.payload : task
+      ));
+    },
   },
 });
 
-export const { addTask, removeTask, setTaskList, reverseList } =
+export const { addTask, removeTask, setTaskList, reverseList, updateTask } =
   tasksSlice.actions;
 export default tasksSlice.reducer;

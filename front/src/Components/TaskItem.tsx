@@ -6,12 +6,10 @@ import { Select, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { reverseList } from "../Reducers/TaskReducer";
+import { removeTask, reverseList, updateTask } from "../Reducers/TaskReducer";
 import { IconButton } from "@mui/material";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
-import useFetch from "use-http";
-import { Task } from "../Store";
 
 export interface TaskProps {
   index: string;
@@ -41,25 +39,34 @@ const TaskItem = (props: TaskProps) => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(props.status);
   const classes = useStyles();
-  const { del, error } = useFetch("/tasks/:id");
 
   const handleReverse = () => {
     dispatch(reverseList());
     alertify.success("Reversed todo-list");
   };
 
-  const handleDelete = async () => {
-    await del(`/${props.id}`);
-
-    if (error) {
-      alertify.error(error.message);
-    }
-
+  const handleDelete = () => {
+    dispatch(removeTask(props.id));
     alertify.success("Task deleted successfully");
   };
 
+  const handleUpdate = (newStatus: string) => {
+    setStatus(newStatus);
+
+    dispatch(
+      updateTask({
+        id: props.id,
+        description: props.description,
+        dueDate: props.dueDate,
+        status: newStatus,
+      })
+    );
+
+    alertify.success("Task updated successfully");
+  };
+
   const taskItemClass = `${classes.taskItem} ${
-    props.isHeader ? classes.headerItem : ""
+    props.isHeader ? classes.headerItem : null
   }`;
 
   return (
@@ -83,7 +90,7 @@ const TaskItem = (props: TaskProps) => {
             variant="outlined"
             fullWidth
             value={status}
-            onChange={(e) => setStatus(e.target.value as string)}
+            onChange={(e) => handleUpdate(e.target.value as string)}
           >
             <MenuItem value="To Do">To Do</MenuItem>
             <MenuItem value="In Progress">In Progress</MenuItem>

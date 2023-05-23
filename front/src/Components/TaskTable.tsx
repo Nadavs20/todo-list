@@ -1,39 +1,20 @@
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import Paper from "@mui/material/Paper";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+} from "@mui/material";
 import TaskItem from "./TaskItem";
-import { RootState, Task } from "../Store/index";
+import { RootState } from "../Store";
 import { useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core";
-import useFetch from "use-http";
-import alertify from "alertifyjs";
-import { useEffect } from "react";
-
-const useStyles = makeStyles((theme) => ({
-  tableWrapper: {},
-}));
 
 export default function TaskTable() {
-  // const tasks = useSelector((state: RootState) => state.tasks);
-  const classes = useStyles();
-  const { data, loading, error } = useFetch<Task[]>("/tasks", {}, []);
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  if (!data) {
-    return <div>No data available</div>;
-  }
+  const tasks = useSelector((state: RootState) => state.tasks);
 
   return (
-    <TableContainer component={Paper} className={classes.tableWrapper}>
+    <TableContainer component={Paper}>
       <Table
         sx={{
           width: "100vm",
@@ -52,7 +33,7 @@ export default function TaskTable() {
           />
         </TableHead>
         <TableBody>
-          {data.map((task, index) => (
+          {tasks.map((task, index) => (
             <TaskItem {...task} index={(index + 1).toString()} key={index} />
           ))}
         </TableBody>
