@@ -18,24 +18,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TaskTable() {
   // const tasks = useSelector((state: RootState) => state.tasks);
-  const { data, error, loading } = useFetch<Task[]>("/tasks", {}, []);
-
   const classes = useStyles();
-
-  useEffect(() => {
-    console.log(data, error, loading);
-  }, [data, error, loading]);
-
+  const { data, loading, error } = useFetch<Task[]>("/tasks", {}, []);
   if (loading) {
-    return <>You are getting Rick Rolled...</>;
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <>You just got Rick Rolled!!!!!11</>;
+    return <div>Error: {error.message}</div>;
   }
 
   if (!data) {
-    return <>You just got Stick bugged!!!!11</>;
+    return <div>No data available</div>;
   }
 
   return (

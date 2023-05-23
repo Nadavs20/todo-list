@@ -39,7 +39,7 @@ taskController.get("/:id", async (req, res) => {
     if (!task) {
       res.status(reqStatus.notFound).json({ message: "Task not found" });
     } else {
-      res.json(task);
+      res.status(reqStatus.success).json(task);
     }
   } catch (err) {
     res.status(reqStatus.serverError).json({ message: err });
@@ -55,7 +55,7 @@ taskController.post("/", async (req, res) => {
     task.status = req.body.status;
     const newTask = await createTask(task);
 
-    res.status(reqStatus.created).json(newTask);
+    res.status(reqStatus.success).json(newTask);
   } catch (err) {
     res.status(reqStatus.serverError).json({ message: err });
   }
@@ -74,7 +74,7 @@ taskController.put("/:id", async (req, res) => {
       task.status = req.body.status;
       const updatedTask = await updateTask(task);
 
-      res.json(updatedTask);
+      res.status(reqStatus.success).json(updatedTask);
     }
   } catch (err) {
     res.status(reqStatus.serverError).json({ message: err });
@@ -85,6 +85,8 @@ taskController.put("/:id", async (req, res) => {
 taskController.delete("/:id", async (req, res) => {
   try {
     await deleteTask(parseInt(req.params.id));
+
+    res.status(reqStatus.success);
   } catch (err) {
     res.status(reqStatus.serverError).json({ message: err });
   }

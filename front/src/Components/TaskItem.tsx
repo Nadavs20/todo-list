@@ -6,7 +6,7 @@ import { Select, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { removeTask, reverseList } from "../Reducers/TaskReducer";
+import { reverseList } from "../Reducers/TaskReducer";
 import { IconButton } from "@mui/material";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";

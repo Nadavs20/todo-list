@@ -25,10 +25,9 @@ const tasksSlice = createSlice({
       return state.filter((task) => task.id !== action.payload);
     },
     setTaskList(state: Task[], action: PayloadAction<Task[]>) {
-      state = action.payload;
+      return (state = action.payload);
     },
     reverseList(state: Task[], action: PayloadAction<void>) {
-      window.open("https://www.youtube.com/watch?v=fC7oUOUEEi4");
       return state.slice().reverse();
     },
   },
