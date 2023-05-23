@@ -5,7 +5,7 @@ import HomePage from "./Pages/Home";
 
 function App() {
   return (
-    <Prov url='localhost:3000'>
+    <Prov url="http://localhost:3000">
       <Provider store={store}>
         <div className="App">
           <HomePage />

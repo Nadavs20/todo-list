@@ -10,6 +10,8 @@ import { removeTask, reverseList } from "../Reducers/TaskReducer";
 import { IconButton } from "@mui/material";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
+import useFetch from "use-http";
+import { Task } from "../Store";
 
 export interface TaskProps {
   index: string;
@@ -17,7 +19,7 @@ export interface TaskProps {
   description: string;
   dueDate: string;
   status: string;
-  isHeader: boolean;
+  isHeader?: boolean;
 }
 const useStyles = makeStyles((theme) => ({
   taskItem: {
@@ -39,18 +41,25 @@ const TaskItem = (props: TaskProps) => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(props.status);
   const classes = useStyles();
+  const { del, error } = useFetch("/tasks/:id");
 
   const handleReverse = () => {
     dispatch(reverseList());
     alertify.success("Reversed todo-list");
   };
-  const handleDelete = () => {
-    dispatch(removeTask(props.id));
+
+  const handleDelete = async () => {
+    await del(`/${props.id}`);
+
+    if (error) {
+      alertify.error(error.message);
+    }
+
     alertify.success("Task deleted successfully");
   };
 
   const taskItemClass = `${classes.taskItem} ${
-    props.isHeader ? classes.headerItem : null
+    props.isHeader ? classes.headerItem : ""
   }`;
 
   return (

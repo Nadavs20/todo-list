@@ -28,10 +28,12 @@ const tasksSlice = createSlice({
       state = action.payload;
     },
     reverseList(state: Task[], action: PayloadAction<void>) {
+      window.open("https://www.youtube.com/watch?v=fC7oUOUEEi4");
       return state.slice().reverse();
     },
   },
 });
 
-export const { addTask, removeTask, setTaskList, reverseList } = tasksSlice.actions;
+export const { addTask, removeTask, setTaskList, reverseList } =
+  tasksSlice.actions;
 export default tasksSlice.reducer;

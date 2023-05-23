@@ -67,7 +67,7 @@ const Pickers = () => {
     const id = Math.floor(Math.random() * 1000).toString();
     const newTask: Task = { id, description, dueDate, status };
     dispatch(addTask(newTask));
-    alertify.success("Hello this is a success message!");
+    alertify.success("Task added successfully!");
     setDescription("");
     setDueDate("");
     setStatus("");
@@ -122,7 +122,7 @@ const Pickers = () => {
               variant="contained"
               type="submit"
               className={classes.submit}
-            >   
+            >
               Add Task
             </Button>
           </Grid>
