@@ -21,17 +21,15 @@ export interface TaskProps {
 }
 const useStyles = makeStyles((theme) => ({
   taskItem: {
-    height: "8vh",
+    height: "12vh",
     width: "80vh",
   },
   statusDropdown: {
     width: "20vh",
   },
   headerItem: {
-    fontSize: "4vm",
-    fontWeight: "bold",
-    fontFamily: "Courier New",
     background: "#42a5f5",
+    fontSize: "10vh",
   },
 }));
 

@@ -15,7 +15,6 @@ export default function NavBar() {
             size="large"
             edge="start"
             color="inherit"
-            aria-label="menu"
             onClick={() =>
               window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
             }
@@ -25,7 +24,6 @@ export default function NavBar() {
           </IconButton>
           <Typography
             variant="h6"
-            component="div"
             sx={{ flexGrow: 1, fontFamily: "Courier New" }}
           >
             TODO LIST
