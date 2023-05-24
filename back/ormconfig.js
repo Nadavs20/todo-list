@@ -1,13 +1,13 @@
-const { SnakeNamingStrategy } = require('typeorm-naming-strategies');
+const { SnakeNamingStrategy } = require("typeorm-naming-strategies");
 
 module.exports = {
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "pgsql10",
-  database: "postgres",
-  schema: "todo_list",
+  type: process.env.TYPE,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  schema: process.env.DB_SCHEME,
   logging: true,
   entities: ["src/Models/*.ts"],
   namingStrategy: new SnakeNamingStrategy(),
