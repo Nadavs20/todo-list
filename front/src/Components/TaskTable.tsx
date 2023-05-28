@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from "react";
 import {
   Paper,
@@ -7,11 +8,24 @@ import {
   TableHead,
 } from "@mui/material";
 import TaskItem from "./TaskItem";
-import { RootState } from "../Store";
-import { useSelector } from "react-redux";
+import { Task } from "../Store";
+import useFetch from "use-http";
+import { useEffect, useState } from "react";
 
 export default function TaskTable() {
-  const tasks = useSelector((state: RootState) => state.tasks);
+  const [data, setData] = useState<Task[]>();
+  const { get, loading, error } = useFetch("/tasks", []);
+  const fetchData = async () => {
+    const res = await get();
+    setData(res);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [get]);
+
+  if (loading || !data) return <>Loading...</>;
+  if (error) return <>Error...</>;
 
   return (
     <TableContainer component={Paper}>
@@ -33,7 +47,7 @@ export default function TaskTable() {
           />
         </TableHead>
         <TableBody>
-          {tasks.map((task, index) => (
+          {data!.map((task, index) => (
             <TaskItem {...task} index={(index + 1).toString()} key={index} />
           ))}
         </TableBody>
