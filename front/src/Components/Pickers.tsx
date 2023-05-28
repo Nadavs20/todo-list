@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import { Task } from "../Store";
 import {
   TextField,
   Button,
@@ -11,9 +11,8 @@ import {
   Box,
   FormControl,
 } from "@material-ui/core";
-import { addTask } from "../Reducers/TaskReducer";
-import { Task } from "../Store/index";
 import { validateDate, validateDescription } from "../rules/validation";
+import useFetch from "use-http";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
 
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   formWrapper: {
-    marginTop: "18vh",
+    marginTop: "12vh",
     marginBottom: "1vh",
     height: "25vh",
   },
@@ -54,9 +53,19 @@ const Pickers = () => {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [status, setStatus] = useState("");
-  const dispatch = useDispatch();
+  const { post, error } = useFetch("/tasks");
+  
+  const saveTask = async (): Promise<Task> => {
+    const newTask = (await post(`/`, { description, dueDate, status })) as Task;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    error
+      ? alertify.error(`Error while saving task: ${error.message}`)
+      : alertify.success("Task added successfully!");
+
+    return newTask;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validateDescription(description) || !validateDate(dueDate)) {
@@ -64,10 +73,7 @@ const Pickers = () => {
       return;
     }
 
-    const id = Math.floor(Math.random() * 1000).toString();
-    const newTask: Task = { id, description, dueDate, status };
-    dispatch(addTask(newTask));
-    alertify.success("Task added successfully!");
+    await saveTask();
     setDescription("");
     setDueDate("");
     setStatus("");
