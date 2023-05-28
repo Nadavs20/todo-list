@@ -5,13 +5,13 @@ import HomePage from "./Pages/Home";
 
 function App() {
   return (
-    <Prov url="http://localhost:3000">
-      <Provider store={store}>
+    <Provider store={store}>
+      <Prov url="http://localhost:3000">
         <div className="App">
           <HomePage />
         </div>
-      </Provider>
-    </Prov>
+      </Prov>
+    </Provider>
   );
 }
 
