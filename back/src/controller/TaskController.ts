@@ -67,7 +67,9 @@ taskController.put("/:id", async (req, res) => {
     const task = await getTaskById(parseInt(req.params.id));
 
     if (!task) {
-      res.status(reqStatus.notFound).json({ message: "Task not found" });
+      res
+        .status(reqStatus.notFound)
+        .json({ message: `Task with id: ${req.params.id} not found` });
     } else {
       task.description = req.body.description;
       task.dueDate = req.body.dueDate;
@@ -84,9 +86,20 @@ taskController.put("/:id", async (req, res) => {
 // DELETE /tasks/:id --> delete task by id
 taskController.delete("/:id", async (req, res) => {
   try {
-    await deleteTask(parseInt(req.params.id));
+    const result = await deleteTask(parseInt(req.params.id));
 
-    res.status(reqStatus.success);
+    let deleteStatus;
+    let message;
+
+    if (result) {
+      deleteStatus = reqStatus.success;
+      message = `Task: ${req.params.id} deleted successfully`;
+    } else {
+      deleteStatus = reqStatus.notFound;
+      message = `Task: ${req.params.id} not found`;
+    }
+
+    res.status(deleteStatus).json({ message: message });
   } catch (err) {
     res.status(reqStatus.serverError).json({ message: err });
   }
