@@ -6,6 +6,9 @@ export const validateDate = (dateStr: string): boolean => {
   const givenDate = new Date(dateStr);
   const today = new Date();
 
+  givenDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
   return givenDate.getTime() >= today.getTime();
 };
 
