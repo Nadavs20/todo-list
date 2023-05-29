@@ -15,9 +15,7 @@ export default function NavBar() {
             size="large"
             edge="start"
             color="inherit"
-            onClick={() =>
-              window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-            }
+            onClick={() => window.open("http://eelslap.com/")}
             sx={{ mr: 2 }}
           >
             <PlaylistAddIcon />
