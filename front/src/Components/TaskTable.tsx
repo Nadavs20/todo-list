@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as React from "react";
+import React from "react";
 import {
   Paper,
   Table,
@@ -8,24 +8,30 @@ import {
   TableHead,
 } from "@mui/material";
 import TaskItem from "./TaskItem";
-import { Task } from "../Store";
 import useFetch from "use-http";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState, Task } from "../Store";
+import { setTaskList } from "../Reducers/TaskReducer";
+import { useDispatch } from "react-redux";
 
 export default function TaskTable() {
-  const [data, setData] = useState<Task[]>();
-  const { get, loading, error } = useFetch("/tasks", []);
-  const fetchData = async () => {
-    const res = await get();
-    setData(res);
-  };
+  const tasks = useSelector((state: RootState) => state.tasks);
+  const { loading, error, data } = useFetch<Task[]>("/tasks", {}, []);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchData();
-  }, [get]);
+    if (data) {
+      dispatch(setTaskList(data));
+    }
+  }, [data]);
 
-  if (loading || !data) return <>Loading...</>;
-  if (error) return <>Error...</>;
+  // useEffect(() => {
+  //   console.log(data, loading, error);
+  // }, [data, loading, error]);
+
+  if (loading) return <>Loading...</>;
+  if (error || !data) return <>Error...</>;
 
   return (
     <TableContainer component={Paper}>
@@ -47,7 +53,7 @@ export default function TaskTable() {
           />
         </TableHead>
         <TableBody>
-          {data!.map((task, index) => (
+          {tasks!.map((task, index) => (
             <TaskItem {...task} index={(index + 1).toString()} key={index} />
           ))}
         </TableBody>
