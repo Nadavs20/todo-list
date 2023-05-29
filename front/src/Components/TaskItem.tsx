@@ -9,6 +9,12 @@ import { IconButton } from "@mui/material";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
 import useFetch from "use-http";
+import { useDispatch } from "react-redux";
+import {
+  reverseList,
+  removeTask as remove,
+  updateTask as update,
+} from "../Reducers/TaskReducer";
 
 export interface TaskProps {
   index: string;
@@ -34,27 +40,36 @@ const useStyles = makeStyles((theme) => ({
 
 const TaskItem = (props: TaskProps) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [status, setStatus] = useState(props.status);
-  const { del, put, error } = useFetch(`/tasks`);
+  const { del, put, error, response } = useFetch(`/tasks`);
 
   const deleteTask = async () => {
     await del(`/${props.id}`);
-    error
-      ? alertify.error(`Error deleting task ${props.id}`)
-      : alertify.success(`Task deleted successfully`);
+
+    if (response.status !== 200 || error) {
+      alertify.error(`Error while deleting task ${props.id}`);
+    } else {
+      dispatch(remove(props.id));
+      alertify.success(`Task deleted successfully`);
+    }
   };
 
   const updateTask = async (newStatus: string) => {
-    await put(`/${props.id}`, {
+    const updatedTask = {
       id: props.id,
       description: props.description,
       dueDate: props.dueDate,
       status: newStatus,
-    });
+    };
+    await put(`/${props.id}`, updatedTask);
 
-    error
-      ? alertify.error(`Error while updating task: ${error.message}`)
-      : alertify.success("Task updated successfully!");
+    if (response.status !== 200 || error) {
+      alertify.error(`Error while updating task ${props.id}`);
+    } else {
+      dispatch(update(updatedTask));
+      alertify.success(`Task updated successfully`);
+    }
   };
 
   const handleDelete = async () => {
@@ -67,8 +82,8 @@ const TaskItem = (props: TaskProps) => {
   };
 
   const handleReverse = () => {
-    window.open("https://puginarug.com/");
-    alert("You just honored the pug, thank you dear Moses!");
+    dispatch(reverseList());
+    alertify.success("You just honored the pug, thank you dear Moses!");
   };
 
   const taskItemClass = `${classes.taskItem} ${

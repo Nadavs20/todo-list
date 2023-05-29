@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Task } from "../Store";
+import { useDispatch } from "react-redux";
+import { addTask } from "../Reducers/TaskReducer";
 import {
   TextField,
   Button,
@@ -50,19 +52,21 @@ const useStyles = makeStyles((theme) => ({
 
 const Pickers = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [status, setStatus] = useState("");
-  const { post, error } = useFetch("/tasks");
-  
-  const saveTask = async (): Promise<Task> => {
+  const { post, response } = useFetch("/tasks");
+
+  const saveTask = async () => {
     const newTask = (await post(`/`, { description, dueDate, status })) as Task;
 
-    error
-      ? alertify.error(`Error while saving task: ${error.message}`)
-      : alertify.success("Task added successfully!");
-
-    return newTask;
+    if (response.status !== 200 || !newTask) {
+      alertify.error(`Error while saving task`);
+    } else {
+      dispatch(addTask(newTask));
+      alertify.success(`Task updated successfully`);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

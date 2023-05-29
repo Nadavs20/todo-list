@@ -26,12 +26,8 @@ export default function TaskTable() {
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   console.log(data, loading, error);
-  // }, [data, loading, error]);
-
   if (loading) return <>Loading...</>;
-  if (error || !data) return <>Error...</>;
+  if (error || !data || !tasks) return <>Error...</>;
 
   return (
     <TableContainer component={Paper}>
