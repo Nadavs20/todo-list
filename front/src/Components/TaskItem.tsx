@@ -5,11 +5,10 @@ import FormatLineSpacingIcon from "@mui/icons-material/FormatLineSpacing";
 import { Select, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { removeTask, reverseList, updateTask } from "../Reducers/TaskReducer";
 import { IconButton } from "@mui/material";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
+import useFetch from "use-http";
 
 export interface TaskProps {
   index: string;
@@ -34,33 +33,42 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TaskItem = (props: TaskProps) => {
-  const dispatch = useDispatch();
-  const [status, setStatus] = useState(props.status);
   const classes = useStyles();
+  const [status, setStatus] = useState(props.status);
+  const { del, put, error } = useFetch(`/tasks`);
 
-  const handleReverse = () => {
-    dispatch(reverseList());
-    alertify.success("Reversed todo-list");
+  const deleteTask = async () => {
+    await del(`/${props.id}`);
+    error
+      ? alertify.error(`Error deleting task ${props.id}`)
+      : alertify.success(`Task deleted successfully`);
   };
 
-  const handleDelete = () => {
-    dispatch(removeTask(props.id));
-    alertify.success("Task deleted successfully");
+  const updateTask = async (newStatus: string) => {
+    await put(`/${props.id}`, {
+      id: props.id,
+      description: props.description,
+      dueDate: props.dueDate,
+      status: newStatus,
+    });
+
+    error
+      ? alertify.error(`Error while updating task: ${error.message}`)
+      : alertify.success("Task updated successfully!");
+  };
+
+  const handleDelete = async () => {
+    await deleteTask();
   };
 
   const handleUpdate = (newStatus: string) => {
     setStatus(newStatus);
+    updateTask(newStatus);
+  };
 
-    dispatch(
-      updateTask({
-        id: props.id,
-        description: props.description,
-        dueDate: props.dueDate,
-        status: newStatus,
-      })
-    );
-
-    alertify.success("Task updated successfully");
+  const handleReverse = () => {
+    window.open("https://puginarug.com/");
+    alert("You just honored the pug, thank you dear Moses!");
   };
 
   const taskItemClass = `${classes.taskItem} ${
