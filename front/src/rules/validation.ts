@@ -10,7 +10,6 @@ export const validateDate = (dateStr: string): boolean => {
 };
 
 export const validateDescription = (description: string): boolean => {
-  const regex = /^([a-z]|[A-Z]|[0-9]){1,100}$/;
-
+  const regex = /^([a-zA-Z0-9 \u0590-\u05FF]){1,100}$/;
   return regex.test(description);
 };
