@@ -12,7 +12,7 @@ import useFetch from "use-http";
 
 export interface TaskProps {
   index: string;
-  id: string;
+  id: number;
   description: string;
   dueDate: string;
   status: string;

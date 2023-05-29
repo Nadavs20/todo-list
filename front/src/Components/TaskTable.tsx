@@ -44,7 +44,7 @@ export default function TaskTable() {
       >
         <TableHead>
           <TaskItem
-            id="0"
+            id={0}
             description="Description"
             dueDate="Due date"
             status="Status"
@@ -53,7 +53,7 @@ export default function TaskTable() {
           />
         </TableHead>
         <TableBody>
-          {tasks!.map((task, index) => (
+          {tasks.map((task, index) => (
             <TaskItem {...task} index={(index + 1).toString()} key={index} />
           ))}
         </TableBody>

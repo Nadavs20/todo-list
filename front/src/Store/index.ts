@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import tasksReducer from "../Reducers/TaskReducer";
 
 export interface Task {
-  id: string;
+  id: number;
   description: string;
   dueDate: string;
   status: string;

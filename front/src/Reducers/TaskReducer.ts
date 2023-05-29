@@ -5,14 +5,7 @@ export interface TasksState {
   tasks: Task[];
 }
 
-const initialState: Task[] = [
-  {
-    id: "1",
-    description: "Finish React project",
-    dueDate: "2023-06-01",
-    status: "In Progress",
-  },
-];
+const initialState: Task[] = [];
 
 const tasksSlice = createSlice({
   name: "tasks",
@@ -21,7 +14,7 @@ const tasksSlice = createSlice({
     addTask(state: Task[], action: PayloadAction<Task>) {
       state.push(action.payload);
     },
-    removeTask(state: Task[], action: PayloadAction<string>) {
+    removeTask(state: Task[], action: PayloadAction<number>) {
       return state.filter((task) => task.id !== action.payload);
     },
     setTaskList(state: Task[], action: PayloadAction<Task[]>) {
