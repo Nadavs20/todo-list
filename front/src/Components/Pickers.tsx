@@ -37,12 +37,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
-  allertValidations: {
-    width: "80vw",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   formWrapper: {
     marginTop: "12vh",
     marginBottom: "1vh",
