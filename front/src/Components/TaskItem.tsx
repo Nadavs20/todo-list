@@ -4,7 +4,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FormatLineSpacingIcon from "@mui/icons-material/FormatLineSpacing";
 import { Select, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useState } from "react";
 import { IconButton } from "@mui/material";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
@@ -41,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 const TaskItem = (props: TaskProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [status, setStatus] = useState(props.status);
   const { del, put, error, response } = useFetch(`/tasks`);
 
   const deleteTask = async () => {
@@ -77,7 +75,6 @@ const TaskItem = (props: TaskProps) => {
   };
 
   const handleUpdate = (newStatus: string) => {
-    setStatus(newStatus);
     updateTask(newStatus);
   };
 
@@ -110,7 +107,7 @@ const TaskItem = (props: TaskProps) => {
             label="Status"
             variant="outlined"
             fullWidth
-            value={status}
+            value={props.status}
             onChange={(e) => handleUpdate(e.target.value as string)}
           >
             <MenuItem value="To Do">To Do</MenuItem>
