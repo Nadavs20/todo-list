@@ -9,11 +9,7 @@ import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
 import useFetch from "use-http";
 import { useDispatch } from "react-redux";
-import {
-  reverseList,
-  removeTask as remove,
-  updateTask as update,
-} from "../Reducers/TaskReducer";
+import { reverseList, removeTask, updateTask } from "../Reducers/TaskReducer";
 
 export interface TaskProps {
   index: string;
@@ -42,18 +38,18 @@ const TaskItem = (props: TaskProps) => {
   const dispatch = useDispatch();
   const { del, put, error, response } = useFetch(`/tasks`);
 
-  const deleteTask = async () => {
+  const handleDelete = async () => {
     await del(`/${props.id}`);
 
     if (response.status !== 200 || error) {
       alertify.error(`Error while deleting task ${props.id}`);
     } else {
-      dispatch(remove(props.id));
+      dispatch(removeTask(props.id));
       alertify.success(`Task deleted successfully`);
     }
   };
 
-  const updateTask = async (newStatus: string) => {
+  const handleUpdate = async (newStatus: string) => {
     const updatedTask = {
       id: props.id,
       description: props.description,
@@ -65,17 +61,9 @@ const TaskItem = (props: TaskProps) => {
     if (response.status !== 200 || error) {
       alertify.error(`Error while updating task ${props.id}`);
     } else {
-      dispatch(update(updatedTask));
+      dispatch(updateTask(updatedTask));
       alertify.success(`Task updated successfully`);
     }
-  };
-
-  const handleDelete = async () => {
-    await deleteTask();
-  };
-
-  const handleUpdate = (newStatus: string) => {
-    updateTask(newStatus);
   };
 
   const handleReverse = () => {
