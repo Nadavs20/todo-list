@@ -1,9 +1,9 @@
 {
-	"folders": [
-		{
-			"name": "todo-list",
-			"path": ".."
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "name": "todo-list",
+      "path": ".."
+    }
+  ],
+  "settings": {}
 }
