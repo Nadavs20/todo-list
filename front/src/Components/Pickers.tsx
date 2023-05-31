@@ -18,7 +18,7 @@ import useFetch from "use-http";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   submit: {
     borderRadius: "4vh",
     padding: "1vh",
@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: "1vh",
     height: "25vh",
   },
-}));
+});
 
 const Pickers = () => {
   const classes = useStyles();

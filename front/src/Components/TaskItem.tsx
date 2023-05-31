@@ -19,7 +19,7 @@ export interface TaskProps {
   status: string;
   isHeader?: boolean;
 }
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   taskItem: {
     height: "12vh",
     width: "80vh",
@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
     background: "#42a5f5",
     fontSize: "10vh",
   },
-}));
+});
 
 const TaskItem = (props: TaskProps) => {
   const classes = useStyles();
