@@ -5,12 +5,12 @@ export class Task {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column("varchar", { length: 255 })
   description: string;
 
-  @Column()
+  @Column("date")
   dueDate: string;
 
-  @Column()
+  @Column("varchar", { length: 50 })
   status: string;
 }
