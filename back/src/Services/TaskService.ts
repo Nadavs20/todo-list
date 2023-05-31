@@ -1,13 +1,13 @@
 import { Task } from "../Models/Task";
 import { getRepository } from "typeorm";
 
-export const getAllTasks = async () => getRepository(Task).find();
+export const getAllTasks = () => getRepository(Task).find();
 
-export const getTaskById = async (id: number) => {
+export const getTaskById = (id: number) => {
   return getRepository(Task).findOne({ where: { id } });
 };
 
-export const createTask = async (task: Task) => {
+export const createTask = (task: Task) => {
   return getRepository(Task).save(task);
 };
 
