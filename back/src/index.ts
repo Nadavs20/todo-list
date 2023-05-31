@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import { createConnection } from "typeorm";
-import { taskRouter } from "./Routes/task-router";
+import { taskRouter } from "./routes/task-router";
 
 // Load environment variables from .env file
 dotenv.config();

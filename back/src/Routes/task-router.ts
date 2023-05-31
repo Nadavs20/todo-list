@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Task } from "../Entities/task";
+import { Task } from "../entities/task";
 import {
   getAllTasks,
   getTaskById,
@@ -8,7 +8,7 @@ import {
   deleteTask,
 } from "../bl/task-bl";
 
-import RequestStatus from "../Utils/request-status";
+import RequestStatus from "../utils/request-status";
 
 const taskRouter = Router();
 
@@ -80,8 +80,8 @@ taskRouter.delete("/:id", async (req, res) => {
   try {
     const result = await deleteTask(parseInt(req.params.id));
 
-    let deleteStatus;
-    let message;
+    let deleteStatus: RequestStatus;
+    let message: string;
 
     if (result) {
       deleteStatus = RequestStatus.success;
