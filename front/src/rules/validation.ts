@@ -12,7 +12,7 @@ export const validateDate = (dateStr: string) => {
   return givenDate.getTime() >= today.getTime();
 };
 
-export const validateDescription = (description: string): boolean => {
+export const validateDescription = (description: string) => {
   const regex = /^([a-zA-Z0-9 \u0590-\u05FF]){1,100}$/;
   return regex.test(description);
 };
