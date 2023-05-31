@@ -26,5 +26,5 @@ export const updateTask = async (task: Task) => {
 export const deleteTask = async (id: number) => {
   const result = await getRepository(Task).delete(id);
 
-  return result.affected && result.affected > 0;
+  return !!result.affected;
 };
