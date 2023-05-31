@@ -8,9 +8,7 @@ export interface Task {
   status: string;
 }
 
-export interface RootState {
-  tasks: Task[];
-}
+export type RootState = ReturnType<typeof store.getState>;
 
 const store = configureStore({
   reducer: {
