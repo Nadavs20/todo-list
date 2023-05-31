@@ -1,4 +1,4 @@
-enum reqStatus {
+enum RequestStatus {
   success = 200,
   created = 201,
   noContent = 204,
@@ -8,4 +8,4 @@ enum reqStatus {
   serverError = 500,
 }
 
-export default reqStatus;
+export default RequestStatus;
