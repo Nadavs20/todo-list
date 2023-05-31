@@ -1,15 +1,14 @@
+import moment from "moment";
+
 export const validateDate = (dateStr: string) => {
   if (!dateStr) {
     return false;
   }
 
-  const givenDate = new Date(dateStr);
-  const today = new Date();
+  const givenDate = moment(dateStr);
+  const today = moment();
 
-  givenDate.setHours(0, 0, 0, 0);
-  today.setHours(0, 0, 0, 0);
-
-  return givenDate.getTime() >= today.getTime();
+  return givenDate.isSameOrAfter(today, "day");
 };
 
 export const validateDescription = (description: string) => {
