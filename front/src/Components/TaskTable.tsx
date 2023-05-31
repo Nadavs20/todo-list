@@ -15,7 +15,7 @@ import { RootState, Task } from "../Store";
 import { setTaskList } from "../Reducers/TaskReducer";
 import { useDispatch } from "react-redux";
 
-export default function TaskTable() {
+const TaskTable = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const { loading, error, data } = useFetch<Task[]>("/tasks", {}, []);
   const dispatch = useDispatch();
@@ -56,4 +56,6 @@ export default function TaskTable() {
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default TaskTable;

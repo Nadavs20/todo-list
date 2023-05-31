@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
-export default function NavBar() {
+const NavBar = () => {
   return (
     <Box sx={{ flexGrow: 1, mb: "5vh" }}>
       <AppBar position="static">
@@ -30,4 +30,6 @@ export default function NavBar() {
       </AppBar>
     </Box>
   );
-}
+};
+
+export default NavBar;
