@@ -18,15 +18,15 @@ const tasksSlice = createSlice({
       return state.filter((task) => task.id !== action.payload);
     },
     setTaskList(state, action: PayloadAction<Task[]>) {
-      return (state = action.payload);
+      return action.payload;
     },
     reverseList(state) {
-      return state.slice().reverse();
+      state.reverse();
     },
     updateTask(state, action: PayloadAction<Task>) {
-      return (state = [...state].map((task) =>
+      return state.map((task) =>
         task.id === action.payload.id ? action.payload : task
-      ));
+      );
     },
   },
 });
