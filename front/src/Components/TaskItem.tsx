@@ -19,7 +19,7 @@ export interface TaskProps {
   status: string;
   isHeader?: boolean;
 }
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   taskItem: {
     height: "12vh",
     width: "80vh",
