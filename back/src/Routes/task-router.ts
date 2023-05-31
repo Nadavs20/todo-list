@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { Task } from "../Entities/Task";
+import { Task } from "../Entities/task";
 import {
   getAllTasks,
   getTaskById,
   createTask,
   updateTask,
   deleteTask,
-} from "../Services/TaskService";
+} from "../bl/task-bl";
 
 import RequestStatus from "../Utils/ReqStatus";
 

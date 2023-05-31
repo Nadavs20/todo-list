@@ -1,4 +1,4 @@
-import { Task } from "../Models/Task";
+import { Task } from "../Entities/task";
 import { getRepository } from "typeorm";
 
 export const getAllTasks = () => getRepository(Task).find();
