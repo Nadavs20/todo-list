@@ -9,6 +9,6 @@ module.exports = {
   database: process.env.DB_NAME,
   schema: process.env.DB_SCHEME,
   logging: true,
-  entities: ["src/Models/*.ts"],
+  entities: ["src/entities/*.ts"],
   namingStrategy: new SnakeNamingStrategy(),
 };
