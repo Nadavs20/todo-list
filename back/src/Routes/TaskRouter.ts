@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Task } from "../Models/Task";
+import { Task } from "../Entities/Task";
 import {
   getAllTasks,
   getTaskById,
@@ -8,38 +8,38 @@ import {
   deleteTask,
 } from "../Services/TaskService";
 
-import reqStatus from "../Models/reqStatus";
+import RequestStatus from "../Utils/ReqStatus";
 
-const taskController = Router();
+const taskRouter = Router();
 
 // GET /tasks --> get all tasks
-taskController.get("/", async (req, res) => {
+taskRouter.get("/", async (req, res) => {
   try {
     const tasks = await getAllTasks();
 
-    res.status(reqStatus.success).json(tasks);
+    res.json(tasks);
   } catch (err) {
-    res.status(reqStatus.serverError).json({ message: err });
+    res.status(RequestStatus.serverError).json({ message: err });
   }
 });
 
 // GET /tasks/:id --> get task by id
-taskController.get("/:id", async (req, res) => {
+taskRouter.get("/:id", async (req, res) => {
   try {
     const task = await getTaskById(parseInt(req.params.id));
 
     if (!task) {
-      res.status(reqStatus.notFound).json({ message: "Task not found" });
+      res.status(RequestStatus.notFound).json({ message: "Task not found" });
     } else {
-      res.status(reqStatus.success).json(task);
+      res.json(task);
     }
   } catch (err) {
-    res.status(reqStatus.serverError).json({ message: err });
+    res.status(RequestStatus.serverError).json({ message: err });
   }
 });
 
 // POST /tasks --> create a new task
-taskController.post("/", async (req, res) => {
+taskRouter.post("/", async (req, res) => {
   try {
     const task = new Task();
     task.description = req.body.description;
@@ -47,20 +47,20 @@ taskController.post("/", async (req, res) => {
     task.status = req.body.status;
     const newTask = await createTask(task);
 
-    res.status(reqStatus.success).json(newTask);
+    res.json(newTask);
   } catch (err) {
-    res.status(reqStatus.serverError).json({ message: err });
+    res.status(RequestStatus.serverError).json({ message: err });
   }
 });
 
 // PUT /tasks/:id --> update task
-taskController.put("/:id", async (req, res) => {
+taskRouter.put("/:id", async (req, res) => {
   try {
     const task = await getTaskById(parseInt(req.params.id));
 
     if (!task) {
       res
-        .status(reqStatus.notFound)
+        .status(RequestStatus.notFound)
         .json({ message: `Task with id: ${req.params.id} not found` });
     } else {
       task.description = req.body.description;
@@ -68,15 +68,15 @@ taskController.put("/:id", async (req, res) => {
       task.status = req.body.status;
       const updatedTask = await updateTask(task);
 
-      res.status(reqStatus.success).json(updatedTask);
+      res.json(updatedTask);
     }
   } catch (err) {
-    res.status(reqStatus.serverError).json({ message: err });
+    res.status(RequestStatus.serverError).json({ message: err });
   }
 });
 
 // DELETE /tasks/:id --> delete task by id
-taskController.delete("/:id", async (req, res) => {
+taskRouter.delete("/:id", async (req, res) => {
   try {
     const result = await deleteTask(parseInt(req.params.id));
 
@@ -84,17 +84,17 @@ taskController.delete("/:id", async (req, res) => {
     let message;
 
     if (result) {
-      deleteStatus = reqStatus.success;
+      deleteStatus = RequestStatus.success;
       message = `Task: ${req.params.id} deleted successfully`;
     } else {
-      deleteStatus = reqStatus.notFound;
+      deleteStatus = RequestStatus.notFound;
       message = `Task: ${req.params.id} not found`;
     }
 
     res.status(deleteStatus).json({ message: message });
   } catch (err) {
-    res.status(reqStatus.serverError).json({ message: err });
+    res.status(RequestStatus.serverError).json({ message: err });
   }
 });
 
-export { taskController };
+export { taskRouter };
