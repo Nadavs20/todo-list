@@ -1,4 +1,4 @@
-export const validateDate = (dateStr: string): boolean => {
+export const validateDate = (dateStr: string) => {
   if (!dateStr) {
     return false;
   }
