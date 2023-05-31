@@ -50,7 +50,7 @@ export default function TaskTable() {
         </TableHead>
         <TableBody>
           {tasks.map((task, index) => (
-            <TaskItem {...task} index={(index + 1).toString()} key={index} />
+            <TaskItem {...task} index={(index + 1).toString()} key={task.id} />
           ))}
         </TableBody>
       </Table>
