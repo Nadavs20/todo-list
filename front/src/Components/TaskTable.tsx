@@ -27,7 +27,7 @@ export default function TaskTable() {
   }, [data]);
 
   if (loading) return <>Loading...</>;
-  if (error || !data || !tasks) return <>Error...</>;
+  if (error || !data) return <>Error...</>;
 
   return (
     <TableContainer component={Paper}>
