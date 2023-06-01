@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import {
   IconButton,
@@ -40,11 +39,12 @@ const TaskTable = () => {
     if (data) {
       dispatch(setTaskList(data));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const handleReverse = () => {
     dispatch(reverseList());
-    alertify.success("You just honored the pug, thank you dear Moses!");
+    alertify.success("todo-list have been reversed");
   };
 
   if (loading) return <>Loading...</>;
