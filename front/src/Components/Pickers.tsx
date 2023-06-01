@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Task } from "../Store";
 import { useDispatch } from "react-redux";
 import { addTask } from "../Reducers/TaskReducer";
+import { useEffect } from "react";
 import {
   TextField,
   Button,
@@ -50,31 +51,41 @@ const Pickers = () => {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [status, setStatus] = useState("");
-  const { post, response } = useFetch("/tasks");
+  const { post, data, error } = useFetch<Task>("/tasks");
 
-  const saveTask = async () => {
-    const newTask = (await post(`/`, { description, dueDate, status })) as Task;
-
-    if (response.status !== 200 || !newTask) {
+  useEffect(() => {
+    if (error) {
       alertify.error(`Error while saving task`);
-    } else {
-      dispatch(addTask(newTask));
+      return;
+    }
+
+    if (data) {
+      dispatch(addTask(data));
+      setDescription("");
+      setDueDate("");
+      setStatus("");
       alertify.success(`Task updated successfully`);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, error]);
+
+  const saveTask = () => {
+    post(`/`, { description, dueDate, status });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!validateDescription(description) || !validateDate(dueDate)) {
+    if (
+      !validateDescription(description) ||
+      !validateDate(dueDate) ||
+      !status
+    ) {
       alertify.error("Please validate all fields!");
       return;
     }
 
-    await saveTask();
-    setDescription("");
-    setDueDate("");
-    setStatus("");
+    saveTask();
   };
 
   return (
