@@ -126,9 +126,9 @@ const Pickers = () => {
                   variant="outlined"
                   onChange={(e) => setStatus(e.target.value as Status)}
                 >
-                  <MenuItem value="To Do">To Do</MenuItem>
-                  <MenuItem value="In Progress">In Progress</MenuItem>
-                  <MenuItem value="Done">Done</MenuItem>
+                  <MenuItem value={Status.toDo}>To Do</MenuItem>
+                  <MenuItem value={Status.inProgress}>In Progress</MenuItem>
+                  <MenuItem value={Status.done}>Done</MenuItem>
                 </Select>
               </FormControl>
             </Box>

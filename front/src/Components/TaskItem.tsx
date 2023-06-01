@@ -100,7 +100,7 @@ const TaskItem = (props: TaskProps) => {
         >
           <MenuItem value={Status.toDo}>To Do</MenuItem>
           <MenuItem value={Status.inProgress}>In Progress</MenuItem>
-          <MenuItem value={Status.Done}>Done</MenuItem>
+          <MenuItem value={Status.done}>Done</MenuItem>
         </Select>
       </TableCell>
       <TableCell>
