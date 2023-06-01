@@ -71,7 +71,7 @@ const Pickers = () => {
   }, [data, error]);
 
   const saveTask = () => {
-    post(`/`, { description, dueDate, status });
+    post({ description, dueDate, status });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
