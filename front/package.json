@@ -56,7 +56,6 @@
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
-    "@types/axios": "^0.14.0",
-    "axios": "^1.4.0"
+    "@types/axios": "^0.14.0"
   }
 }
