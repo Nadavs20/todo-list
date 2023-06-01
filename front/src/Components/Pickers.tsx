@@ -18,6 +18,7 @@ import { validateDate, validateDescription } from "../rules/validation";
 import useFetch from "use-http";
 import "alertifyjs/build/css/alertify.min.css";
 import alertify from "alertifyjs";
+import Status from "../Enums/status";
 
 const useStyles = makeStyles({
   submit: {
@@ -66,7 +67,7 @@ const Pickers = () => {
       setStatus("");
       alertify.success(`Task updated successfully`);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error]);
 
   const saveTask = () => {
@@ -123,7 +124,7 @@ const Pickers = () => {
                   id="demo-simple-select"
                   value={status}
                   variant="outlined"
-                  onChange={(e) => setStatus(e.target.value as string)}
+                  onChange={(e) => setStatus(e.target.value as Status)}
                 >
                   <MenuItem value="To Do">To Do</MenuItem>
                   <MenuItem value="In Progress">In Progress</MenuItem>
