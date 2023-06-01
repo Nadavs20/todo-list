@@ -9,13 +9,14 @@ import alertify from "alertifyjs";
 import useFetch from "use-http";
 import { useDispatch } from "react-redux";
 import { removeTask, updateTask } from "../Reducers/TaskReducer";
+import Status from "../Enums/status";
 
 export interface TaskProps {
   index: number;
   id: number;
   description: string;
   dueDate: string;
-  status: string;
+  status: Status;
 }
 const useStyles = makeStyles({
   taskItem: {
@@ -43,7 +44,7 @@ const TaskItem = (props: TaskProps) => {
     }
   };
 
-  const handleUpdate = async (newStatus: string) => {
+  const handleUpdate = async (newStatus: Status) => {
     const updatedTask = {
       id: props.id,
       description: props.description,
@@ -78,11 +79,11 @@ const TaskItem = (props: TaskProps) => {
           variant="outlined"
           fullWidth
           value={props.status}
-          onChange={(e) => handleUpdate(e.target.value as string)}
+          onChange={(e) => handleUpdate(e.target.value as Status)}
         >
-          <MenuItem value="To Do">To Do</MenuItem>
-          <MenuItem value="In Progress">In Progress</MenuItem>
-          <MenuItem value="Done">Done</MenuItem>
+          <MenuItem value={Status.toDo}>To Do</MenuItem>
+          <MenuItem value={Status.inProgress}>In Progress</MenuItem>
+          <MenuItem value={Status.Done}>Done</MenuItem>
         </Select>
       </TableCell>
       <TableCell>
